@@ -6,8 +6,10 @@ const speed := 200
 var _ball_dir: int
 var _up: String
 var _down: String
+var audio_player_hit: AudioStreamPlayer
 
 func _ready():
+	audio_player_hit = $"../AudioPlayerHit"
 	var _name = name.to_lower()
 	_up = _name + "_move_up"
 	_down = _name + "_move_down"
@@ -24,9 +26,11 @@ func _process(delta):
 
 
 func _on_area_entered(area: Area2D):
+
 	if area.name != "Ball":
 		return
-
+	
+	audio_player_hit.play()
 	var ball: Ball = area
 	var collision_node: CollisionShape2D = self.get_node('Collision')
 	var rect: RectangleShape2D = collision_node.shape

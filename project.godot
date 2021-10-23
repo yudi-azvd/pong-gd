@@ -17,16 +17,22 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Game",
 "language": "GDScript",
-"path": "res://Game.gd"
+"path": "res://scripts/Game.gd"
+}, {
+"base": "Area2D",
+"class": "Paddle",
+"language": "GDScript",
+"path": "res://scripts/Paddle.gd"
 }, {
 "base": "Label",
 "class": "ScoreBoard",
 "language": "GDScript",
-"path": "res://ScoreBoard.gd"
+"path": "res://scripts/ScoreBoard.gd"
 } ]
 _global_script_class_icons={
 "Ball": "",
 "Game": "",
+"Paddle": "",
 "ScoreBoard": ""
 }
 
@@ -35,7 +41,7 @@ _global_script_class_icons={
 config/name="Pong com Gdscript"
 config/description="A simple Pong game. This demo shows best practices
 for game development in Godot, including signals."
-run/main_scene="res://NormalGame.tscn"
+run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
 
 [display]

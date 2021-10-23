@@ -1,14 +1,17 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://sprites/paddle.png" type="Texture" id=1]
 [ext_resource path="res://scripts/CeilingFloor.gd" type="Script" id=2]
 [ext_resource path="res://scripts/Paddle.gd" type="Script" id=3]
 [ext_resource path="res://sprites/ball.png" type="Texture" id=4]
 [ext_resource path="res://scripts/Wall.gd" type="Script" id=5]
+[ext_resource path="res://audio/player-hit.wav" type="AudioStream" id=6]
 [ext_resource path="res://scripts/Ball.gd" type="Script" id=7]
-[ext_resource path="res://Game.gd" type="Script" id=8]
+[ext_resource path="res://scripts/Game.gd" type="Script" id=8]
 [ext_resource path="res://fonts/bit_font.tres" type="DynamicFont" id=9]
-[ext_resource path="res://ScoreBoard.gd" type="Script" id=10]
+[ext_resource path="res://scripts/ScoreBoard.gd" type="Script" id=10]
+[ext_resource path="res://audio/wall-hit.wav" type="AudioStream" id=11]
+[ext_resource path="res://audio/lose.wav" type="AudioStream" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 16 )
@@ -49,7 +52,6 @@ __meta__ = {
 }
 
 [node name="Left" type="Area2D" parent="."]
-modulate = Color( 0.756863, 1, 1, 1 )
 position = Vector2( 67.629, 200 )
 script = ExtResource( 3 )
 
@@ -62,7 +64,6 @@ scale = Vector2( 1, 2 )
 shape = SubResource( 1 )
 
 [node name="Right" type="Area2D" parent="."]
-modulate = Color( 1, 0.854902, 1, 1 )
 position = Vector2( 563.815, 200 )
 script = ExtResource( 3 )
 
@@ -118,6 +119,15 @@ shape = SubResource( 4 )
 
 [node name="Spatial" type="Spatial" parent="."]
 
+[node name="AudioWallHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="AudioPlayerHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="AudioLose" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+
 [connection signal="area_entered" from="Left" to="Left" method="_on_area_entered"]
 [connection signal="area_entered" from="Right" to="Right" method="_on_area_entered"]
 [connection signal="area_entered" from="LeftWall" to="LeftWall" method="_on_area_entered"]
@@ -125,4 +135,6 @@ shape = SubResource( 4 )
 [connection signal="area_entered" from="RightWall" to="RightWall" method="_on_area_entered"]
 [connection signal="ball_touched_wall" from="RightWall" to="." method="_on_ball_touched_wall"]
 [connection signal="area_entered" from="Ceiling" to="Ceiling" method="_on_area_entered"]
+[connection signal="ball_touched_wall" from="Ceiling" to="." method="_on_ball_touched_wall"]
 [connection signal="area_entered" from="Floor" to="Floor" method="_on_area_entered"]
+[connection signal="ball_touched_wall" from="Floor" to="." method="_on_ball_touched_wall"]

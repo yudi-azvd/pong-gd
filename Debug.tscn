@@ -1,49 +1,57 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scripts/Paddle.gd" type="Script" id=1]
 [ext_resource path="res://sprites/paddle.png" type="Texture" id=2]
 [ext_resource path="res://sprites/ball.png" type="Texture" id=3]
 [ext_resource path="res://scripts/Ball.gd" type="Script" id=4]
-[ext_resource path="res://scripts/Debug.gd" type="Script" id=5]
+[ext_resource path="res://scripts/ScoreBoard.gd" type="Script" id=5]
+[ext_resource path="res://scripts/Wall.gd" type="Script" id=6]
+[ext_resource path="res://scripts/Game.gd" type="Script" id=7]
+[ext_resource path="res://fonts/bit_font.tres" type="DynamicFont" id=8]
+[ext_resource path="res://scripts/CeilingFloor.gd" type="Script" id=9]
+[ext_resource path="res://scripts/Debug.gd" type="Script" id=10]
+[ext_resource path="res://audio/player-hit.wav" type="AudioStream" id=11]
+[ext_resource path="res://audio/wall-hit.wav" type="AudioStream" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 4 )
-
-[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 4, 16 )
 
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 4, 4 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 10, 200 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 320, 10 )
+
 [node name="Debug" type="Node2D"]
+script = ExtResource( 7 )
 
 [node name="Background" type="ColorRect" parent="."]
 margin_right = 640.0
 margin_bottom = 400.0
-color = Color( 0.14902, 0.14902, 0.156863, 1 )
+color = Color( 0.168627, 0.168627, 0.168627, 1 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="ScoreBoard" type="Label" parent="."]
+margin_left = 299.999
+margin_top = 69.5998
+margin_right = 339.999
+margin_bottom = 83.5998
+custom_fonts/font = ExtResource( 8 )
+text = "0   0"
+align = 1
+valign = 1
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VectorOnBall" type="Node2D" parent="."]
-script = ExtResource( 5 )
-
-[node name="Ball" type="Area2D" parent="."]
-modulate = Color( 1, 0, 0, 1 )
-position = Vector2( 250.5, 200 )
-script = ExtResource( 4 )
-
-[node name="Sprite" type="Sprite" parent="Ball"]
-light_mask = 0
-texture = ExtResource( 3 )
-
-[node name="Collision" type="CollisionShape2D" parent="Ball"]
-modulate = Color( 0.00784314, 0.486275, 0.027451, 1 )
-shape = SubResource( 1 )
-__meta__ = {
-"_editor_description_": "O que escreve aqui?
-"
-}
-
 [node name="Left" type="Area2D" parent="."]
-modulate = Color( 0.756863, 1, 1, 1 )
 position = Vector2( 67.629, 200 )
 script = ExtResource( 1 )
 
@@ -53,10 +61,9 @@ texture = ExtResource( 2 )
 
 [node name="Collision" type="CollisionShape2D" parent="Left"]
 scale = Vector2( 1, 2 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Right" type="Area2D" parent="."]
-modulate = Color( 1, 0.854902, 1, 1 )
 position = Vector2( 563.815, 200 )
 script = ExtResource( 1 )
 
@@ -66,7 +73,66 @@ texture = ExtResource( 2 )
 
 [node name="Collision" type="CollisionShape2D" parent="Right"]
 scale = Vector2( 1, 2 )
+shape = SubResource( 1 )
+
+[node name="Ball" type="Area2D" parent="."]
+position = Vector2( 320, 200 )
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="Ball"]
+texture = ExtResource( 3 )
+
+[node name="Collision" type="CollisionShape2D" parent="Ball"]
 shape = SubResource( 2 )
+__meta__ = {
+"_editor_description_": "O que escreve aqui?
+"
+}
+
+[node name="LeftWall" type="Area2D" parent="."]
+position = Vector2( -10, 200 )
+script = ExtResource( 6 )
+
+[node name="Collision" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource( 3 )
+
+[node name="RightWall" type="Area2D" parent="."]
+position = Vector2( 650, 200 )
+script = ExtResource( 6 )
+
+[node name="Collision" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource( 3 )
+
+[node name="Ceiling" type="Area2D" parent="."]
+position = Vector2( 320, -10 )
+script = ExtResource( 9 )
+
+[node name="Collision" type="CollisionShape2D" parent="Ceiling"]
+shape = SubResource( 4 )
+
+[node name="Floor" type="Area2D" parent="."]
+position = Vector2( 320, 410 )
+script = ExtResource( 9 )
+
+[node name="Collision" type="CollisionShape2D" parent="Floor"]
+shape = SubResource( 4 )
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="VectorOnBall" type="Node2D" parent="."]
+script = ExtResource( 10 )
+
+[node name="AudioWallHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+
+[node name="AudioPlayerHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
 
 [connection signal="area_entered" from="Left" to="Left" method="_on_area_entered"]
 [connection signal="area_entered" from="Right" to="Right" method="_on_area_entered"]
+[connection signal="area_entered" from="LeftWall" to="LeftWall" method="_on_area_entered"]
+[connection signal="ball_touched_wall" from="LeftWall" to="." method="_on_ball_touched_wall"]
+[connection signal="area_entered" from="RightWall" to="RightWall" method="_on_area_entered"]
+[connection signal="ball_touched_wall" from="RightWall" to="." method="_on_ball_touched_wall"]
+[connection signal="area_entered" from="Ceiling" to="Ceiling" method="_on_area_entered"]
+[connection signal="area_entered" from="Floor" to="Floor" method="_on_area_entered"]

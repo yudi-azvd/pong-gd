@@ -11,7 +11,7 @@ export var vec_color := Color(1, 1, 1)
 export var vec_width := 2.0
 
 func _ready():
-	ball = get_parent().get_node("Ball")
+	ball = $"../Ball"
 
 
 func _process(_delta):
