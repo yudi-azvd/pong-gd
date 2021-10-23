@@ -1,5 +1,7 @@
 extends Area2D
 
+class_name Paddle
+
 const speed := 200
 var _ball_dir: int
 var _up: String

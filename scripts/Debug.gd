@@ -8,9 +8,10 @@ export var vec_end: Vector2
 export var new_ball_dir: Vector2
 export var is_mouse_button_clicked: bool
 export var vec_color := Color(1, 1, 1)
+export var vec_width := 2.0
 
 func _ready():
-	ball = get_node("Ball")
+	ball = get_parent().get_node("Ball")
 
 
 func _process(_delta):
@@ -55,4 +56,4 @@ func _input(event: InputEvent):
 
 				
 func _draw():
-	draw_line(vec_start, vec_end, vec_color, 2, true)
+	draw_line(vec_start, vec_end, vec_color, vec_width, true)

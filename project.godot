@@ -13,14 +13,26 @@ _global_script_classes=[ {
 "class": "Ball",
 "language": "GDScript",
 "path": "res://scripts/Ball.gd"
+}, {
+"base": "Node2D",
+"class": "Game",
+"language": "GDScript",
+"path": "res://Game.gd"
+}, {
+"base": "Label",
+"class": "ScoreBoard",
+"language": "GDScript",
+"path": "res://ScoreBoard.gd"
 } ]
 _global_script_class_icons={
-"Ball": ""
+"Ball": "",
+"Game": "",
+"ScoreBoard": ""
 }
 
 [application]
 
-config/name="Pong with C#"
+config/name="Pong com Gdscript"
 config/description="A simple Pong game. This demo shows best practices
 for game development in Godot, including signals."
 run/main_scene="res://NormalGame.tscn"
