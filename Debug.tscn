@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scripts/Paddle.gd" type="Script" id=1]
 [ext_resource path="res://sprites/paddle.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://scripts/Debug.gd" type="Script" id=10]
 [ext_resource path="res://audio/player-hit.wav" type="AudioStream" id=11]
 [ext_resource path="res://audio/wall-hit.wav" type="AudioStream" id=12]
+[ext_resource path="res://audio/lose.wav" type="AudioStream" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 16 )
@@ -27,6 +28,9 @@ extents = Vector2( 320, 10 )
 
 [node name="Debug" type="Node2D"]
 script = ExtResource( 7 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
 
 [node name="Background" type="ColorRect" parent="."]
 margin_right = 640.0
@@ -121,12 +125,16 @@ shape = SubResource( 4 )
 
 [node name="VectorOnBall" type="Node2D" parent="."]
 script = ExtResource( 10 )
+vec_color = Color( 1, 0, 0, 1 )
 
 [node name="AudioWallHit" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
 
 [node name="AudioPlayerHit" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
+
+[node name="AudioLose" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 13 )
 
 [connection signal="area_entered" from="Left" to="Left" method="_on_area_entered"]
 [connection signal="area_entered" from="Right" to="Right" method="_on_area_entered"]
@@ -135,4 +143,6 @@ stream = ExtResource( 11 )
 [connection signal="area_entered" from="RightWall" to="RightWall" method="_on_area_entered"]
 [connection signal="ball_touched_wall" from="RightWall" to="." method="_on_ball_touched_wall"]
 [connection signal="area_entered" from="Ceiling" to="Ceiling" method="_on_area_entered"]
+[connection signal="ball_touched_wall" from="Ceiling" to="." method="_on_ball_touched_wall"]
 [connection signal="area_entered" from="Floor" to="Floor" method="_on_area_entered"]
+[connection signal="ball_touched_wall" from="Floor" to="." method="_on_ball_touched_wall"]

@@ -29,11 +29,6 @@ func _ready():
 	audio_lose.stream.loop_mode = false
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-# func _process(_delta):
-	
-# 	pass	
-
 func _on_ball_touched_wall(wall: String):
 	
 	if wall == "left":
